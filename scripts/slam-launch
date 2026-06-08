@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+set -eo pipefail
+source /opt/ros/${ROS_DISTRO:-jazzy}/setup.bash
+source /opt/openvins_ws/install/setup.bash
+
+CONFIG=${OPENVINS_CONFIG:-euroc_mav}
+CONFIG_PATH=${OPENVINS_CONFIG_PATH:-}
+USE_STEREO=${USE_STEREO:-true}
+MAX_CAMERAS=${MAX_CAMERAS:-2}
+VERBOSITY=${VERBOSITY:-INFO}
+
+exec ros2 launch ov_msckf subscribe.launch.py   config:=${CONFIG} config_path:=${CONFIG_PATH}   use_stereo:=${USE_STEREO} max_cameras:=${MAX_CAMERAS}   verbosity:=${VERBOSITY} rviz_enable:=false   --ros-args   -r /ov_msckf/poseimu:=/slam/pose   -r /ov_msckf/pathimu:=/slam/path

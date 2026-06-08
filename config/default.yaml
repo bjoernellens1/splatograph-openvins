@@ -1,0 +1,7 @@
+left_image_topic: /camera/left/image_raw
+right_image_topic: /camera/right/image_raw
+imu_topic: /imu
+pose_topic: /slam/pose
+path_topic: /slam/path
+world_frame: map
+imu_frame: imu
