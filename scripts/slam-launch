@@ -9,4 +9,16 @@ USE_STEREO=${USE_STEREO:-true}
 MAX_CAMERAS=${MAX_CAMERAS:-2}
 VERBOSITY=${VERBOSITY:-INFO}
 
-exec ros2 launch ov_msckf subscribe.launch.py   config:=${CONFIG} config_path:=${CONFIG_PATH}   use_stereo:=${USE_STEREO} max_cameras:=${MAX_CAMERAS}   verbosity:=${VERBOSITY} rviz_enable:=false   --ros-args   -r /ov_msckf/poseimu:=/slam/pose   -r /ov_msckf/pathimu:=/slam/path
+ARGS=(
+  config:=${CONFIG}
+  use_stereo:=${USE_STEREO}
+  max_cameras:=${MAX_CAMERAS}
+  verbosity:=${VERBOSITY}
+  rviz_enable:=false
+)
+
+if [[ -n "${CONFIG_PATH}" ]]; then
+  ARGS+=(config_path:=${CONFIG_PATH})
+fi
+
+exec ros2 launch ov_msckf subscribe.launch.py "${ARGS[@]}"
